@@ -1,0 +1,42 @@
+{
+  "name": "drf-hook",
+  "version": "1.0.0",
+  "description": "",
+  "keywords": [],
+  "main": "lib/index.js",
+  "dependencies": {
+    "lodash": "4.17.15",
+    "react": "^16.8.6",
+    "react-dom": "16.8.0-alpha.1",
+    "react-json-tree": "0.11.2",
+    "react-scripts": "2.1.3-next.6a95aae9",
+    "react-timeago": "4.4.0"
+  },
+  "devDependencies": {
+    "babel-cli": "^6.26.0",
+    "babel-core": "^6.26.3",
+    "babel-plugin-syntax-flow": "^6.18.0",
+    "babel-plugin-syntax-jsx": "^6.18.0",
+    "babel-preset-es2015": "^6.24.1",
+    "babel-preset-react": "^6.24.1",
+    "babel-preset-stage-1": "^6.24.1",
+    "babelify": "^10.0.0",
+    "browserify": "^16.3.0",
+    "enzyme": "^3.10.0",
+    "flow-bin": "^0.104.0",
+    "prettier": "^1.18.2"
+  },
+  "scripts": {
+    "cpflow": "find ./src -name '*.js' -not -path '*/__*' | while read filepath; do cp $filepath `echo $filepath | sed 's/\\/src\\//\\/lib\\//g'`.flow; done",
+    "start": "react-scripts start",
+    "build": "babel src/ --out-dir lib/",
+    "test": "react-scripts test --env=jsdom",
+    "eject": "react-scripts eject"
+  },
+  "browserslist": [
+    ">0.2%",
+    "not dead",
+    "not ie <= 11",
+    "not op_mini all"
+  ]
+}
