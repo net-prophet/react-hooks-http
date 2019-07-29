@@ -30,6 +30,7 @@
     "cpflow": "find ./src -name '*.js' -not -path '*/__*' | while read filepath; do cp $filepath `echo $filepath | sed 's/\\/src\\//\\/lib\\//g'`.flow; done",
     "start": "react-scripts start",
     "build": "babel src/ --out-dir lib/",
+    "prepare": "babel src/ --out-dir lib/",
     "test": "react-scripts test --env=jsdom",
     "eject": "react-scripts eject"
   },
