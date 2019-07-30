@@ -1,4 +1,4 @@
-import React, { useEffect } from "react";
+import React from "react";
 import _ from "lodash";
 
 export default function DRFObject(api, model, id, Component) {

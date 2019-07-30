@@ -8,12 +8,15 @@ export const defaultRenderers = {
   error: ({ error, sendRequest }) => (
     <div>Error in API response: {error.toString()} </div>
   ),
-  loaded: ({ response }) => <pre>{JSON.stringify(response, null, 2)}</pre>,
+  loaded: ({ data }) => <pre>{JSON.stringify(data, null, 2)}</pre>,
   debug: () => <div>DEBUG=true set but no debug component specified</div>
 };
 
-export default (options, response, render) => {
-  render = { ...defaultRenderers, ...options.render, ...render };
+export default (options, input, render) => {
+  render = { ...defaultRenderers, ...render };
+
+  const response = input.response && input.response.data ? input.response : input
+
   const withDebug = main =>
     options.debug ? (
       <React.Fragment>

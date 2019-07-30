@@ -1,5 +1,6 @@
-import React, { useEffect, useState } from "react";
+import { useEffect, useState } from "react";
 import _ from "lodash";
+import RenderAsyncComponent from './RenderAsyncComponent'
 
 const GetResponseJSON = response => {
   return new Promise((resolve, reject) =>
@@ -49,7 +50,7 @@ export default function useHTTPCall(url, opt = null) {
     setStartTime(new Date());
     setBody(form_data ? form_data : form);
     setResponse({ ...response, pending: true });
-  };
+ };
 
   useEffect(() => {
     if (!startTime) return;

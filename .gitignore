@@ -30,3 +30,5 @@ examples/simple/bundle.js
 */.DS_Store
 yarn-error.log
 
+lib
+examples/simple/bundle.js*
