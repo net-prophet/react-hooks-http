@@ -1,6 +1,5 @@
 import { useEffect, useState } from "react";
 import _ from "lodash";
-import RenderAsyncComponent from './RenderAsyncComponent'
 
 const GetResponseJSON = response => {
   return new Promise((resolve, reject) =>

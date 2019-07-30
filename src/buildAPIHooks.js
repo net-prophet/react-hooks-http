@@ -7,10 +7,9 @@ export default (base_url, base_options = null, render_api = null) => {
     useHTTPCall(base_url + stub, { ...base_options, ...options });
 
   const AsyncComponent = (response, render, options) => {
-    if (typeof render === "function") render = { loaded: render };
-    const merged_options = _.merge({}, base_options, options);
     const merged_render = _.merge({}, render_api, render);
-    return RenderAsyncComponent(merged_options, response, merged_render);
+    const merged_options = _.merge({}, base_options, options);
+    return RenderAsyncComponent(response, merged_render, merged_options);
   };
 
   return {

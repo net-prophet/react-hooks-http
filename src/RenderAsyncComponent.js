@@ -12,7 +12,9 @@ export const defaultRenderers = {
   debug: () => <div>DEBUG=true set but no debug component specified</div>
 };
 
-export default (options, input, render) => {
+export default (input, render, options) => {
+  if (typeof render === "function") render = { loaded: render };
+
   render = { ...defaultRenderers, ...render };
 
   const response = input.response && input.response.data ? input.response : input
@@ -26,8 +28,8 @@ export default (options, input, render) => {
     ) : (
       main
     );
-  if (!response || _.isEmpty(response)) return withDebug(render.loading());
   if (response.error) return withDebug(render.error(response));
+  if (_.isEmpty(response) || !response.data) return withDebug(render.loading());
   if (response.data) return withDebug(render.loaded(response));
   return <div>RenderAsyncComponent never got any anything?</div>;
 };

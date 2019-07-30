@@ -1,6 +1,6 @@
 {
   "name": "react-hooks-http",
-  "version": "0.1.1",
+  "version": "0.1.2",
   "description": "useHTTPCall hook for interacting with remote APIs; very young, experimental, feedback and contributions welcome",
   "keywords": [],
   "main": "lib/index.js",
