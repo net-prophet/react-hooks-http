@@ -1,35 +1,25 @@
 import React from "react";
-import _ from "lodash";
 
 // If you don't override the render components,
 // we have convenient defaults
 export const defaultRenderers = {
   loading: () => <div>Loading</div>,
-  error: ({ error, sendRequest }) => (
-    <div>Error in API response: {error.toString()} </div>
+  error: ({ error }) => (
+    <div>Error in API response:<br /><pre>{error.toString()}</pre></div>
   ),
   loaded: ({ data }) => <pre>{JSON.stringify(data, null, 2)}</pre>,
-  debug: () => <div>DEBUG=true set but no debug component specified</div>
 };
 
-export default (input, render, options) => {
+export default (input, render) => {
   if (typeof render === "function") render = { loaded: render };
 
   render = { ...defaultRenderers, ...render };
 
   const response = input.response && input.response.data ? input.response : input
 
-  const withDebug = main =>
-    options.debug ? (
-      <React.Fragment>
-        {main}
-        {render.debug({ ...response })}
-      </React.Fragment>
-    ) : (
-      main
-    );
-  if (response.error) return withDebug(render.error(response));
-  if (_.isEmpty(response) || !response.data) return withDebug(render.loading());
-  if (response.data) return withDebug(render.loaded(response));
-  return <div>RenderAsyncComponent never got any anything?</div>;
+  if (response.error) return render.error(response);
+  if (response.data) return render.loaded(response);
+  if (!response.startTime || !response || !response.data) render.loading();
+  console.warn(`AsyncComponent Error: No content to show for ${response.method} ${response.url}, there may have been a problem with an AJAX request`)
+  return null;
 };

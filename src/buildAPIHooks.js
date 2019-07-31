@@ -1,15 +1,21 @@
+import React from 'react';
 import useHTTPCall from "./useHTTPCall";
 import RenderAsyncComponent from "./RenderAsyncComponent";
-import _ from "lodash";
 
-export default (base_url, base_options = null, render_api = null) => {
+export default (base_url, api_options = null, api_views = null) => {
   const useAPI = (stub, options) =>
-    useHTTPCall(base_url + stub, { ...base_options, ...options });
+    useHTTPCall(base_url + stub, { ...api_options, ...options });
 
-  const AsyncComponent = (response, render, options) => {
-    const merged_render = _.merge({}, render_api, render);
-    const merged_options = _.merge({}, base_options, options);
-    return RenderAsyncComponent(response, merged_render, merged_options);
+  const Component = (hook, views) => {
+    if(React.isValidElement(views) || typeof views === 'function')
+        views = { loaded: views }
+    const _views = {...api_views, ...views}
+    console.log(_views)
+    const rendered = RenderAsyncComponent(hook.response, _views);
+    return <React.Fragment>
+            {rendered}
+            {api_options.debug && _views.debug ? _views.debug(hook) : null}
+        </React.Fragment>
   };
 
   return {
@@ -20,6 +26,6 @@ export default (base_url, base_options = null, render_api = null) => {
       useAPI(stub, { ...options, method: "OPTIONS" }),
     usePUT: (stub, options) => useAPI(stub, { ...options, method: "PUT" }),
     usePATCH: (stub, options) => useAPI(stub, { ...options, method: "PATCH" }),
-    AsyncComponent
+    Component
   };
 };
