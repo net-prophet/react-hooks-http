@@ -18,7 +18,7 @@ export const AsyncComponent = (hook, render) => {
   if (hook.response.error) return render.error(hook.response);
   if (hook.response.data) return render.loaded(hook.response);
   if (!hook.response.startTime || !hook.response || !hook.response.data)
-    render.loading(hook.response);
+    return render.loading(hook.response);
   console.warn(`AsyncComponent Error: No content to show for ${hook.response.method} ${hook.response.url}, there may have been a problem with an AJAX request`)
   return null;
 };
@@ -45,6 +45,7 @@ const makeOptions = options => {
   return {
     method: "GET",
     get_instantly: true,
+    retry_failure: false,
     debug: false,
     limit_per_second: 0.5,
     ...options
@@ -89,6 +90,10 @@ export function useHTTPCall(url, opt = null) {
 
   useEffect(() => {
     if (!startTime) return;
+    if(response.error && !options.retry_failure)
+    {
+      return;
+    }
     const debug = options.debug ? console.debug : () => null;
     let sendBody;
     if (options.method !== "GET" && (!body || !body.length)) sendBody = body;
@@ -131,6 +136,7 @@ export function useHTTPCall(url, opt = null) {
     !response.startTime &&
     !response.pending &&
     !response.loaded &&
+    !(response.error && !options.retry_failure) &&
     sendRequest();
 
   const setField = (key, event, prop = "value") => {

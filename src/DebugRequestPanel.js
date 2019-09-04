@@ -26,7 +26,7 @@ export default ({response, sendRequest, form}) => {
         <button onClick={() => setShow(show === "response" ? null : "response")}>
           Show Response
         </button>
-        { response.options && response.options.method != 'GET' ?
+        { response.options && response.options.method !== 'GET' ?
             <React.Fragment>
             <button onClick={() => setShow(show === "form" ? null : "form")}>
                 Show Form Body

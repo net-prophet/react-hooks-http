@@ -3,6 +3,8 @@ import React from 'react'
 import ReactDom from 'react-dom'
 import {buildAPIHooks, DebugRequestPanel} from '../../src/index'
 
+console.info('Starting Demo React Hooks App')
+
 const api = buildAPIHooks(
   "https://jsonplaceholder.typicode.com",
     {debug: true}, // Request options
@@ -12,6 +14,7 @@ const api = buildAPIHooks(
 const appElement = document.getElementById('app')
 
 const Example = (props) => {
+    console.info('Mounted Example Element')
     const todo = api.useGET('/todos/1')
 
     todo.requestOnce();
